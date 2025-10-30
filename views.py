@@ -62,7 +62,6 @@ class NotificacionesAPIView(APIView):
                 return response
 
             response = asyncio.run(inner())
-            print(response)
             return Response({
                 "status": "enviado",
                 "respuesta_ws": response

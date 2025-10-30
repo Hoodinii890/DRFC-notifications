@@ -8,6 +8,7 @@ from django.conf import settings
 from Notificaciones.utils import send_user_notification
 import uvicorn
 from asgiref.sync import sync_to_async
+from django.conf import settings
 
 # Configuración del servidor ASGI
 class ASGIServer(threading.Thread):
@@ -19,8 +20,8 @@ class ASGIServer(threading.Thread):
     def run(self):
         config = uvicorn.Config(
             self.app,
-            host="127.0.0.1",
-            port=8001,
+            host=settings.HOST,
+            port=settings.WS_PORT,
             log_level="error"
         )
         self.server = uvicorn.Server(config)
@@ -66,6 +67,5 @@ class NotificationTestCase(TransactionTestCase):
             return response
 
         response = asyncio.run(inner())
-        print(response)
 
 
